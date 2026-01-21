@@ -1,0 +1,5 @@
+{
+  "name": "ContentFlow AI",
+  "description": "An autonomous AI content manager for creating viral short-form video content using Gemini models. Features multi-agent workflows for scripting, visual generation, and audio synthesis.",
+  "requestFramePermissions": []
+}
