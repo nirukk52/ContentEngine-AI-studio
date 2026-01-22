@@ -1,0 +1,282 @@
+{
+  "$schema": "https://example.com/avatar-content-engine/style-pack.v1.json",
+  "pack_meta": {
+    "pack_id": "string_required",
+    "pack_name": "string_required",
+    "pack_version": "1.0.0",
+    "created_at": "ISO_8601_datetime",
+    "updated_at": "ISO_8601_datetime",
+    "target_creator_style": "varun_maya_like | johnny_harris_like | custom",
+    "platform": "YouTubeShorts | InstagramReels | TikTok",
+    "aspect_ratio": "9:16",
+    "primary_language": "en-US",
+    "content_genre": "hosted_explainer | news_commentary | docu_explainer",
+    "notes": "short_optional_description"
+  },
+
+  "scene_template": {
+    "scene_count_range": {
+      "min": 6,
+      "max": 12
+    },
+    "default_scene_duration_sec": {
+      "min": 1.0,
+      "max": 3.5
+    },
+    "scene_types": [
+      {
+        "type": "hook",
+        "goal": "stop_scroll",
+        "recommended_duration_sec": [1.5, 3.0],
+        "required_elements": ["on_screen_text", "high_motion_background", "strong_emphasis_words"],
+        "avatar_policy": "on"
+      },
+      {
+        "type": "context",
+        "goal": "set_frame_fast",
+        "recommended_duration_sec": [2.0, 4.0],
+        "required_elements": ["b_roll_or_infographic", "subtitle_kinetics"],
+        "avatar_policy": "pip_small"
+      },
+      {
+        "type": "proof",
+        "goal": "credibility_anchor",
+        "recommended_duration_sec": [2.0, 5.0],
+        "required_elements": ["proof_object", "source_label"],
+        "avatar_policy": "off_or_pip_reaction"
+      },
+      {
+        "type": "explain",
+        "goal": "teach_the_point",
+        "recommended_duration_sec": [3.0, 6.0],
+        "required_elements": ["structured_on_screen_text", "visual_change_every_2s"],
+        "avatar_policy": "on"
+      },
+      {
+        "type": "twist_or_take",
+        "goal": "increase_tension",
+        "recommended_duration_sec": [2.0, 4.5],
+        "required_elements": ["pattern_break", "caption_emphasis"],
+        "avatar_policy": "on_large"
+      },
+      {
+        "type": "payoff",
+        "goal": "deliver_value",
+        "recommended_duration_sec": [2.0, 5.0],
+        "required_elements": ["clear_takeaway_text"],
+        "avatar_policy": "on"
+      },
+      {
+        "type": "cta",
+        "goal": "comment_or_follow",
+        "recommended_duration_sec": [1.5, 3.0],
+        "required_elements": ["single_question_prompt"],
+        "avatar_policy": "on"
+      }
+    ],
+    "default_transitions": {
+      "allowed": ["hard_cut", "match_cut", "whip_pan", "glitch"],
+      "preferred": "hard_cut",
+      "max_soft_transitions_per_video": 2
+    }
+  },
+
+  "caption_rules": {
+    "style": "kinetic",
+    "placement": "lower_third_center",
+    "safe_area_padding_pct": 6,
+    "max_words_per_caption": 6,
+    "max_chars_per_line": 18,
+    "lines_max": 2,
+    "timing": {
+      "caption_refresh_rate_ms": 350,
+      "min_caption_hold_ms": 450,
+      "sync_strictness": "tight"
+    },
+    "emphasis_rules": {
+      "bold_keywords": true,
+      "underline_never": true,
+      "numbers_highlight": true,
+      "color_for_numbers": "#ffd54f",
+      "emphasis_capitalization": "sparingly",
+      "max_emphasis_words_per_caption": 2
+    },
+    "readability_rules": {
+      "min_font_size_px": 46,
+      "stroke_width_px": 6,
+      "shadow_enabled": true,
+      "avoid_full_sentence_captions": true
+    }
+  },
+
+  "timing_rules": {
+    "total_video_duration_sec": {
+      "min": 20,
+      "max": 45
+    },
+    "pacing": {
+      "visual_change_every_sec": 2.0,
+      "max_static_shot_duration_sec": 3.5,
+      "pattern_break_required_by_sec": 8
+    },
+    "hook": {
+      "hook_must_land_by_sec": 1.2,
+      "first_text_on_screen_by_sec": 0.3
+    },
+    "energy_curve": {
+      "start_energy": "high",
+      "middle_energy": "medium_high",
+      "end_energy": "high",
+      "drop_allowed_sec": {
+        "max_continuous_low_energy_sec": 2.5
+      }
+    }
+  },
+
+  "background_library_tags": {
+    "taxonomy_version": "1.0",
+    "required_tags_per_scene": 2,
+    "tag_groups": {
+      "setting": [
+        "city_timelapse",
+        "office_broll",
+        "lab_research",
+        "street_india",
+        "studio_clean",
+        "ui_dashboard"
+      ],
+      "motion_level": ["static", "slow", "medium", "fast"],
+      "visual_type": [
+        "stock_broll",
+        "motion_graphics",
+        "headline_screenshot",
+        "tweet_screenshot",
+        "chart_graph",
+        "screen_recording"
+      ],
+      "mood": ["tense", "curious", "urgent", "serious", "funny_dark"],
+      "topic": [
+        "ai",
+        "startups",
+        "finance",
+        "health",
+        "geopolitics",
+        "internet_culture"
+      ]
+    },
+    "selection_rules": [
+      {
+        "when_scene_type": "hook",
+        "must_include": ["fast", "stock_broll"],
+        "avoid": ["static"]
+      },
+      {
+        "when_scene_type": "proof",
+        "must_include": ["headline_screenshot"],
+        "avoid": ["fast"]
+      },
+      {
+        "when_scene_type": "explain",
+        "must_include": ["motion_graphics_or_ui_dashboard"],
+        "avoid": []
+      }
+    ]
+  },
+
+  "scoring_rules": {
+    "score_range": {
+      "min": 1,
+      "max": 10
+    },
+    "overall_pass_threshold": 7.8,
+    "auto_reject_threshold": 6.5,
+    "dimensions": [
+      {
+        "key": "hook_strength",
+        "weight": 0.2,
+        "definition": "Would this stop-scroll in first 1–2s?",
+        "signals": ["strong_claim", "fast_visual_change", "clean_big_text"],
+        "min_score_to_pass": 8
+      },
+      {
+        "key": "style_match",
+        "weight": 0.2,
+        "definition": "Does it feel like the reference creator format?",
+        "signals": ["pacing_similarity", "caption_feel", "scene_grammar_match"],
+        "min_score_to_pass": 8
+      },
+      {
+        "key": "visual_rhythm",
+        "weight": 0.15,
+        "definition": "No dead moments; constant forward motion.",
+        "signals": ["change_every_2s", "pattern_breaks", "no_overlong_shots"],
+        "min_score_to_pass": 7
+      },
+      {
+        "key": "caption_quality",
+        "weight": 0.15,
+        "definition": "Readable, punchy, perfectly synced.",
+        "signals": ["low_word_density", "emphasis_used_well", "no_wall_of_text"],
+        "min_score_to_pass": 7
+      },
+      {
+        "key": "clarity_of_takeaway",
+        "weight": 0.15,
+        "definition": "Viewer understands the point without rewatching.",
+        "signals": ["explicit_summary", "clean_structure", "no_missing_steps"],
+        "min_score_to_pass": 7
+      },
+      {
+        "key": "proof_integrity",
+        "weight": 0.1,
+        "definition": "Claims are anchored when needed.",
+        "signals": ["source_labels", "proof_objects_present", "no_fake_stats"],
+        "min_score_to_pass": 7
+      },
+      {
+        "key": "reuse_and_repeat_risk",
+        "weight": 0.05,
+        "definition": "Does it feel repetitive vs previous outputs?",
+        "signals": ["background_diversity", "scene_variation"],
+        "min_score_to_pass": 6
+      }
+    ],
+    "autofix_recommendations": [
+      {
+        "if_dimension_below": "hook_strength",
+        "actions": ["shorten_hook_line", "increase_motion_level", "use_bigger_text"]
+      },
+      {
+        "if_dimension_below": "caption_quality",
+        "actions": ["reduce_words_per_caption", "increase_refresh_rate", "limit_emphasis_words"]
+      },
+      {
+        "if_dimension_below": "visual_rhythm",
+        "actions": ["insert_pattern_break_scene", "add_1_proof_object", "cut_longest_shot"]
+      }
+    ]
+  },
+
+  "variant_generation": {
+    "enabled": true,
+    "variants_per_run": 3,
+    "variant_axes": [
+      {
+        "axis": "hook",
+        "options": ["shock_claim", "question_hook", "counterintuitive_fact"]
+      },
+      {
+        "axis": "caption_density",
+        "options": ["light", "medium"]
+      },
+      {
+        "axis": "background_energy",
+        "options": ["fast", "medium"]
+      }
+    ],
+    "winner_selection": {
+      "method": "highest_overall_score",
+      "tie_breaker": "hook_strength"
+    }
+  }
+}

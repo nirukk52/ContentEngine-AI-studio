@@ -1,0 +1,195 @@
+{
+  "$schema": "https://example.com/video-timeline-scene.v1.json",
+
+  "timeline_scene": {
+    "scene_id": "string_required",
+    "start_time_global": "00:00.000",
+    "duration_seconds": 4,
+    "narrative_purpose": "hook | proof | context | analysis | punchline",
+    "audio_track": {
+      "vo_full_line": "full VO line for the entire scene",
+      "music": "track_id_or_mood",
+      "sfx": [
+        { "time_offset": 0.0, "type": "whoosh" },
+        { "time_offset": 2.3, "type": "glitch" }
+      ]
+    },
+
+    "frames": [
+      {
+        "second_index": 0,
+        "time_range": "00:00.000-00:00.999",
+        "vo_chunk": "Chinese peptides are quietly taking over Silicon Valley.",
+        "on_screen_text": {
+          "text": "Chinese peptides",
+          "max_words": 3,
+          "position": "middle_left",
+          "style": "headline",
+          "entry_animation": "type_on",
+          "exit_at_second": 2
+        },
+        "primary_visual": {
+          "type": "article_screenshot | social_post | avatar | b_roll | screen_recording",
+          "asset_ref": "gs://assets/nyt_peptides_headline.png",
+          "description_for_ai": "Full-height screenshot of a New York Times mobile article, headline highlighted in blue, like iOS Safari reader.",
+          "camera_motion": "slow_zoom_in",
+          "overlay": [
+            {
+              "type": "highlight_block",
+              "target_region": "headline_area",
+              "color": "#ffffff80",
+              "animation": "pulse_slow"
+            }
+          ]
+        },
+        "secondary_visual": {
+          "enabled": true,
+          "mode": "pip",
+          "asset_type": "avatar",
+          "asset_ref": "gs://avatar/host_neutral.mov",
+          "position": "bottom_right",
+          "size": "small",
+          "avatar_action": "talk_to_camera"
+        },
+        "proof": {
+          "has_proof": true,
+          "source_name": "The New York Times",
+          "source_url": "https://www.nytimes.com/...",
+          "proof_style": "screenshot_full_bleed_with_highlight"
+        },
+        "avatar_policy": {
+          "show_avatar": true,
+          "reasoning": "Hook: need human plus proof in same second to lock attention."
+        },
+        "transition_out_hint": {
+          "at_second": 0.8,
+          "style": "subtle_glitch",
+          "to_scene": "timeline_scene_02"
+        }
+      },
+
+      {
+        "second_index": 1,
+        "time_range": "00:01.000-00:01.999",
+        "vo_chunk": "This isn’t just a health craze; it’s a gray market.",
+        "on_screen_text": {
+          "text": "Gray-market biohacking",
+          "position": "top_center",
+          "style": "label",
+          "entry_animation": "slide_up",
+          "exit_at_second": 2
+        },
+        "primary_visual": {
+          "type": "b_roll",
+          "asset_ref": "gs://broll/sf_office_people_night.mp4",
+          "description_for_ai": "Nighttime office b‑roll, engineers at computers, shallow depth of field.",
+          "camera_motion": "pan_right",
+          "overlay": []
+        },
+        "secondary_visual": {
+          "enabled": true,
+          "mode": "pip",
+          "asset_type": "article_screenshot",
+          "asset_ref": "gs://assets/nyt_peptides_headline.png",
+          "position": "top_left",
+          "size": "small",
+          "avatar_action": null
+        },
+        "proof": {
+          "has_proof": true,
+          "source_name": "The New York Times",
+          "source_url": "https://www.nytimes.com/...",
+          "proof_style": "small_pip_reference"
+        },
+        "avatar_policy": {
+          "show_avatar": false,
+          "reasoning": "Shift focus from host to world; b‑roll tells story while article remains as small evidence."
+        }
+      },
+
+      {
+        "second_index": 2,
+        "time_range": "00:02.000-00:02.999",
+        "vo_chunk": "One article even calls it a new kind of underground economy.",
+        "on_screen_text": {
+          "text": "Underground economy",
+          "position": "center",
+          "style": "headline",
+          "entry_animation": "zoom_pop",
+          "exit_at_second": 3
+        },
+        "primary_visual": {
+          "type": "article_screenshot",
+          "asset_ref": "gs://assets/techspot_paragraph.png",
+          "description_for_ai": "Dark-mode TECHSPOT article, paragraph about peptides, highlighted sentence 'with one OpenAI researcher publicly likening it to an Ozempic for autism'.",
+          "camera_motion": "static",
+          "overlay": [
+            {
+              "type": "highlight_block",
+              "target_region": "ozempic_sentence",
+              "color": "#ffffff80",
+              "animation": "glitch_once"
+            }
+          ]
+        },
+        "secondary_visual": {
+          "enabled": false
+        },
+        "proof": {
+          "has_proof": true,
+          "source_name": "TechSpot",
+          "source_url": "https://www.techspot.com/...",
+          "proof_style": "full_screen_quote"
+        },
+        "avatar_policy": {
+          "show_avatar": false,
+          "reasoning": "Serious quote; full frame needed for readable text and to avoid implying endorsement through host facial expression."
+        }
+      },
+
+      {
+        "second_index": 3,
+        "time_range": "00:03.000-00:03.999",
+        "vo_chunk": "And the science backing many of these claims is paper-thin.",
+        "on_screen_text": {
+          "text": "Weak science",
+          "position": "bottom_center",
+          "style": "label",
+          "entry_animation": "fade_up",
+          "exit_at_second": 4
+        },
+        "primary_visual": {
+          "type": "avatar",
+          "asset_ref": "gs://avatar/host_concerned_closeup.mov",
+          "description_for_ai": "Close-up of host in studio, eyebrows slightly raised, serious tone.",
+          "camera_motion": "slow_zoom_in",
+          "overlay": []
+        },
+        "secondary_visual": {
+          "enabled": true,
+          "mode": "pip",
+          "asset_type": "article_screenshot",
+          "asset_ref": "gs://assets/techspot_paragraph.png",
+          "position": "top_left",
+          "size": "small",
+          "avatar_action": "react_to_proof"
+        },
+        "proof": {
+          "has_proof": true,
+          "source_name": "TechSpot",
+          "source_url": "https://www.techspot.com/...",
+          "proof_style": "small_pip_reference"
+        },
+        "avatar_policy": {
+          "show_avatar": true,
+          "reasoning": "Now we move into analysis; avatar expresses doubt while keeping proof visible but secondary."
+        },
+        "transition_out_hint": {
+          "at_second": 3.6,
+          "style": "hard_cut",
+          "to_scene": "next_timeline_scene"
+        }
+      }
+    ]
+  }
+}

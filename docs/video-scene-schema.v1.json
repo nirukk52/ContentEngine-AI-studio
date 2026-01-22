@@ -1,0 +1,484 @@
+{
+  "$schema": "https://example.com/video-scene-schema.v1.json",
+  "video_meta": {
+    "title": "Chinese Peptides Are Taking Over Silicon Valley",
+    "topic": "Explainer",
+    "platform": "YouTubeShorts",
+    "aspect_ratio": "9:16",
+    "primary_language": "en-US",
+    "narrative_style": "hosted_explainer",
+    "tooling": {
+      "stack": "GoogleCloud",
+      "uses_ai_generation": true,
+      "ai_modules": [
+        "avatar_generator",
+        "subtitle_generator",
+        "b_roll_search",
+        "research_summarizer"
+      ]
+    }
+  },
+
+  "global_presentation_rules": {
+    "subtitles": {
+      "style": "kinetic",
+      "position": "lower_third_center",
+      "max_words_per_beat": 6,
+      "emphasis_rules": {
+        "bold_keywords": true,
+        "color_for_numbers": "#ffd54f",
+        "animate_on_accented_words": true
+      },
+      "reasoning": "Short, kinetic subs keep attention on mobile and make dense factual info feel lighter."
+    },
+    "avatar_usage": {
+      "default_state": "on_for_opening_and_turning_points",
+      "rules": [
+        {
+          "when": "hook_or_cold_open",
+          "show_avatar": true,
+          "size": "medium",
+          "placement": "bottom_center",
+          "rationale": "Human face grabs attention and builds trust at the start."
+        },
+        {
+          "when": "heavy_data_or_article_quote",
+          "show_avatar": false,
+          "rationale": "Full frame is needed for readable screenshots, charts, and headlines."
+        },
+        {
+          "when": "explaining_opinion_or_takeaway",
+          "show_avatar": true,
+          "size": "large",
+          "placement": "center",
+          "rationale": "Avatar conveys emotion and ownership of the opinion."
+        },
+        {
+          "when": "montage_or_location_broll",
+          "show_avatar": "picture_in_picture_small",
+          "placement": "top_right",
+          "rationale": "Keeps host present while showing context footage."
+        }
+      ]
+    },
+    "proof_objects": {
+      "allowed_types": [
+        "news_headline",
+        "tweet_or_social_post",
+        "screenshot_of_research",
+        "quote_block",
+        "chart_or_graph"
+      ],
+      "display_rules": {
+        "must_include_source_label": true,
+        "source_label_position": "top_left",
+        "minimum_on_screen_time_sec": 1.5,
+        "blur_sensitive_info": true
+      },
+      "reasoning": "Every strong factual claim visually anchored to at least one proof object to reduce hallucinations."
+    },
+    "picture_in_picture": {
+      "usage_rules": [
+        {
+          "purpose": "connect_narration_to_real_world",
+          "pattern": "full_screen_proof_with_small_avatar_reaction",
+          "when_to_use": [
+            "reading_Trump_post",
+            "showing_NewYorkTimes_article",
+            "scrolling_Reuters_clip"
+          ]
+        },
+        {
+          "purpose": "show_app_or_UI_demo",
+          "pattern": "screen_recording_full_frame_with_avatar_pip",
+          "when_to_use": [
+            "explaining_technical_UI",
+            "walking_through_data_dashboard"
+          ]
+        }
+      ]
+    },
+    "ai_information_policy": {
+      "ai_can_generate": [
+        "paraphrased_summaries_of_articles",
+        "transitions_and_signpost_sentences",
+        "background_descriptions_for_broll",
+        "non-factual_metaphors_or_analogies"
+      ],
+      "ai_must_not_generate_without_source": [
+        "specific_statistics_or_numbers",
+        "direct_quotes",
+        "named_research_findings",
+        "claims_about_future_regulation_or_policy"
+      ],
+      "must_be_human_verified": [
+        "legal_or_medical_implications",
+        "claims_about_geopolitics",
+        "health_effects_of_drugs_or_supplements"
+      ],
+      "reasoning": "AI drafts structure and glue text while all hard facts and numbers are grounded in linked sources."
+    }
+  },
+
+  "scene_contract": {
+    "scene_id": "string_required",
+    "time_range": "optional_string_00:00-00:03",
+    "audio": {
+      "vo_line": "exact narration text",
+      "vo_emphasis_words": ["max", "5", "words"],
+      "music_cue": "track_name_or_mood",
+      "sfx": ["whoosh", "glitch", "typewriter"]
+    },
+    "on_screen_text": {
+      "short_text": "1-5 words",
+      "position": "top_center | middle_left | custom(x,y)",
+      "style": "headline | label | quote",
+      "entry_animation": "fade_up | slide_up | type_on",
+      "exit_animation": "fade_out | snap_off"
+    },
+    "visual_layer_primary": {
+      "type": "avatar | b_roll | article_screenshot | social_post | screen_recording | infographic | map",
+      "asset_ref": "gs://bucket/path/to/asset",
+      "description": "for generator: what this shot should depict",
+      "motion": {
+        "camera": "static | slow_zoom_in | slow_zoom_out | pan_left | pan_right",
+        "speed": "slow | medium | fast",
+        "overlay_elements": [
+          {
+            "type": "label | highlight_box | pointer_arrow",
+            "target_region": "bounding_box_or_percentages",
+            "animation": "pulse | outline_draw | flash_once"
+          }
+        ]
+      }
+    },
+    "visual_layer_secondary": {
+      "enabled": true,
+      "mode": "picture_in_picture | split_screen_vertical | split_screen_horizontal",
+      "asset_type": "avatar | proof | b_roll",
+      "asset_ref": "gs://bucket/path/to/secondary_asset",
+      "size": "small | medium",
+      "position": "top_right | bottom_right | bottom_left",
+      "reasoning_tag": "keep_host_present | show_proof | show_reaction"
+    },
+    "proof": {
+      "has_proof": true,
+      "proof_type": "article_headline | tweet | research_paragraph | chart",
+      "source_name": "New York Times",
+      "source_url": "https://...",
+      "quote_or_highlight": "short snippet to highlight",
+      "display_style": "screenshot_full_bleed | screenshot_cropped_with_highlight | quote_card",
+      "ai_handling": {
+        "can_ai_crop_and_highlight": true,
+        "must_human_check_text": true
+      }
+    },
+    "avatar_director": {
+      "show_avatar": true,
+      "avatar_size": "medium",
+      "avatar_crop": "waist_up | shoulders_up",
+      "placement": "center | left_third | right_third",
+      "avatar_action": "talk_to_camera | react_to_proof | point_at_ui | walk_in_background",
+      "reasoning": "Explain why avatar is here or not: e.g. 'emotional beat', 'data-heavy beat', 'comic relief'."
+    },
+    "transition_out": {
+      "type": "hard_cut | match_cut | swipe | glitch",
+      "to_scene_id": "next_scene_or_null",
+      "motivation": "change_topic | escalate | punchline | reset_attention"
+    },
+    "call_to_action": {
+      "type": "none | subscribe | comment_prompt | external_link",
+      "placement": "end_of_scene | over_b_roll | as_text_only",
+      "copy": "What do you think about biohacking peptides?",
+      "avatar_required": false
+    }
+  },
+
+  "example_scenes": [
+    {
+      "scene_id": "hook_peptides_take_over",
+      "time_range": "00:00-00:03",
+      "audio": {
+        "vo_line": "Chinese peptides are quietly taking over Silicon Valley.",
+        "vo_emphasis_words": ["Chinese peptides", "taking over"],
+        "music_cue": "high_tension_riser",
+        "sfx": ["whoosh"]
+      },
+      "on_screen_text": {
+        "short_text": "Chinese peptides",
+        "position": "middle_left",
+        "style": "headline",
+        "entry_animation": "type_on",
+        "exit_animation": "fade_out"
+      },
+      "visual_layer_primary": {
+        "type": "b_roll",
+        "asset_ref": "gs://broll/sf_skyline_night.mp4",
+        "description": "Fast cut of SF skyline + office lights turning on.",
+        "motion": {
+          "camera": "slow_zoom_in",
+          "speed": "medium",
+          "overlay_elements": []
+        }
+      },
+      "visual_layer_secondary": {
+        "enabled": true,
+        "mode": "picture_in_picture",
+        "asset_type": "avatar",
+        "asset_ref": "gs://avatar/host_neutral_opening.mov",
+        "size": "small",
+        "position": "bottom_right",
+        "reasoning_tag": "keep_host_present"
+      },
+      "proof": {
+        "has_proof": false
+      },
+      "avatar_director": {
+        "show_avatar": true,
+        "avatar_size": "small",
+        "avatar_crop": "shoulders_up",
+        "placement": "bottom_right",
+        "avatar_action": "talk_to_camera",
+        "reasoning": "Hook needs human connection but no text clutter yet."
+      },
+      "transition_out": {
+        "type": "match_cut",
+        "to_scene_id": "nyt_headline_reveal",
+        "motivation": "move_into_proof"
+      },
+      "call_to_action": {
+        "type": "none"
+      }
+    },
+    {
+      "scene_id": "nyt_headline_reveal",
+      "time_range": "00:03-00:07",
+      "audio": {
+        "vo_line": "This New York Times piece shows just how big the gray-market has become.",
+        "vo_emphasis_words": ["New York Times", "gray-market"],
+        "music_cue": "continue_previous",
+        "sfx": ["page_flip"]
+      },
+      "on_screen_text": {
+        "short_text": "NYT investigation",
+        "position": "top_left",
+        "style": "label",
+        "entry_animation": "fade_up",
+        "exit_animation": "fade_out"
+      },
+      "visual_layer_primary": {
+        "type": "article_screenshot",
+        "asset_ref": "gs://proof/nyt_peptides_headline.png",
+        "description": "Full-screen mobile screenshot with headline highlighted.",
+        "motion": {
+          "camera": "slow_zoom_in",
+          "speed": "slow",
+          "overlay_elements": [
+            {
+              "type": "highlight_box",
+              "target_region": "headline_area",
+              "animation": "outline_draw"
+            }
+          ]
+        }
+      },
+      "visual_layer_secondary": {
+        "enabled": false
+      },
+      "proof": {
+        "has_proof": true,
+        "proof_type": "article_headline",
+        "source_name": "The New York Times",
+        "source_url": "https://www.nytimes.com/...",
+        "quote_or_highlight": "Chinese Peptides Are the Latest Biohacking Trend in the Tech World",
+        "display_style": "screenshot_cropped_with_highlight",
+        "ai_handling": {
+          "can_ai_crop_and_highlight": true,
+          "must_human_check_text": true
+        }
+      },
+      "avatar_director": {
+        "show_avatar": false,
+        "reasoning": "Full frame needed for readable headline; authority comes from article, not host."
+      },
+      "transition_out": {
+        "type": "hard_cut",
+        "to_scene_id": "openai_researcher_quote",
+        "motivation": "introduce_stronger_claim"
+      },
+      "call_to_action": {
+        "type": "none"
+      }
+    },
+    {
+      "scene_id": "openai_researcher_quote",
+      "time_range": "00:07-00:11",
+      "audio": {
+        "vo_line": "One OpenAI researcher even called it 'Ozempic for autism'—with almost no clinical evidence.",
+        "vo_emphasis_words": ["Ozempic for autism", "no clinical evidence"],
+        "music_cue": "drop_music_under",
+        "sfx": ["glitch"]
+      },
+      "on_screen_text": {
+        "short_text": "“Ozempic for autism”",
+        "position": "center",
+        "style": "quote",
+        "entry_animation": "glitch",
+        "exit_animation": "fade_out"
+      },
+      "visual_layer_primary": {
+        "type": "article_screenshot",
+        "asset_ref": "gs://proof/techspot_quote.png",
+        "description": "TECHSPOT paragraph screenshot with highlighted sentence.",
+        "motion": {
+          "camera": "static",
+          "speed": "slow",
+          "overlay_elements": [
+            {
+              "type": "highlight_box",
+              "target_region": "quote_sentence",
+              "animation": "pulse"
+            }
+          ]
+        }
+      },
+      "visual_layer_secondary": {
+        "enabled": true,
+        "mode": "picture_in_picture",
+        "asset_type": "avatar",
+        "asset_ref": "gs://avatar/host_concerned_react.mov",
+        "size": "small",
+        "position": "bottom_left",
+        "reasoning_tag": "show_reaction"
+      },
+      "proof": {
+        "has_proof": true,
+        "proof_type": "research_paragraph",
+        "source_name": "TechSpot",
+        "source_url": "https://www.techspot.com/...",
+        "quote_or_highlight": "with one OpenAI researcher publicly likening it to an 'Ozempic for autism'",
+        "display_style": "screenshot_cropped_with_highlight",
+        "ai_handling": {
+          "can_ai_crop_and_highlight": true,
+          "must_human_check_text": true
+        }
+      },
+      "avatar_director": {
+        "show_avatar": true,
+        "avatar_size": "small",
+        "avatar_crop": "shoulders_up",
+        "placement": "bottom_left",
+        "avatar_action": "react_to_proof",
+        "reasoning": "Serious line; avatar shows skepticism and prevents endorsement misinterpretation."
+      },
+      "transition_out": {
+        "type": "glitch",
+        "to_scene_id": "explainer_shot",
+        "motivation": "shift_from_quote_to_analysis"
+      },
+      "call_to_action": {
+        "type": "none"
+      }
+    },
+    {
+      "scene_id": "explainer_shot",
+      "time_range": "00:11-00:18",
+      "audio": {
+        "vo_line": "So what are these peptides, why are tech workers obsessed, and how dangerous is this gray market really?",
+        "vo_emphasis_words": ["what", "why", "how dangerous"],
+        "music_cue": "light_pulse_background",
+        "sfx": []
+      },
+      "on_screen_text": {
+        "short_text": "What, why, how risky?",
+        "position": "top_center",
+        "style": "headline",
+        "entry_animation": "slide_up",
+        "exit_animation": "fade_out"
+      },
+      "visual_layer_primary": {
+        "type": "avatar",
+        "asset_ref": "gs://avatar/host_desk_wide.mov",
+        "description": "Host at desk in studio, clean background.",
+        "motion": {
+          "camera": "slow_zoom_in",
+          "speed": "slow",
+          "overlay_elements": []
+        }
+      },
+      "visual_layer_secondary": {
+        "enabled": false
+      },
+      "proof": {
+        "has_proof": false
+      },
+      "avatar_director": {
+        "show_avatar": true,
+        "avatar_size": "large",
+        "avatar_crop": "waist_up",
+        "placement": "center",
+        "avatar_action": "talk_to_camera",
+        "reasoning": "Thesis statement; needs maximum presence to anchor narrative."
+      },
+      "transition_out": {
+        "type": "hard_cut",
+        "to_scene_id": "b_roll_injection_and_ports",
+        "motivation": "move_into_explanation"
+      },
+      "call_to_action": {
+        "type": "none"
+      }
+    },
+    {
+      "scene_id": "b_roll_injection_and_ports",
+      "time_range": "00:18-00:25",
+      "audio": {
+        "vo_line": "From backyard injections to vials shipped straight from China, the whole system runs in the shadows of regulation.",
+        "vo_emphasis_words": ["backyard injections", "from China", "shadows"],
+        "music_cue": "continue_previous",
+        "sfx": ["ship_horn_low"]
+      },
+      "on_screen_text": {
+        "short_text": "Gray-market supply chain",
+        "position": "bottom_center",
+        "style": "label",
+        "entry_animation": "fade_up",
+        "exit_animation": "fade_out"
+      },
+      "visual_layer_primary": {
+        "type": "b_roll",
+        "asset_ref": "gs://broll/injection_closeup.mp4",
+        "description": "Close-up of syringe in arm, macro shot.",
+        "motion": {
+          "camera": "static",
+          "speed": "slow",
+          "overlay_elements": []
+        }
+      },
+      "visual_layer_secondary": {
+        "enabled": true,
+        "mode": "split_screen_vertical",
+        "asset_type": "b_roll",
+        "asset_ref": "gs://broll/shipping_containers_china_port.mp4",
+        "size": "medium",
+        "position": "right",
+        "reasoning_tag": "show_supply_chain"
+      },
+      "proof": {
+        "has_proof": false
+      },
+      "avatar_director": {
+        "show_avatar": false,
+        "reasoning": "Visual storytelling of injections and shipping is stronger without host."
+      },
+      "transition_out": {
+        "type": "match_cut",
+        "to_scene_id": "regulation_on_screen_text",
+        "motivation": "set_up_risk_section"
+      },
+      "call_to_action": {
+        "type": "none"
+      }
+    }
+  ]
+}

@@ -63,3 +63,10 @@ export interface FeedbackItem {
 }
 
 export type ChatMode = 'script' | 'visual' | 'audio' | 'avatar' | 'avatar_video' | 'combo';
+
+export interface StoredProjectIndexEntry {
+  projectId: string;
+  name: string;
+  updatedAt: string;
+  folderId: string;
+}
