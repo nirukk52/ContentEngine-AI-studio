@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import Layout from './components/Layout';
+import DirectorMode from './components/Director/DirectorMode';
 import Dashboard from './components/Dashboard';
 import LoginScreen from './components/LoginScreen';
 import SegmentCard from './components/segments/SegmentCard';
@@ -371,55 +372,7 @@ export default function App() {
         />
       )}
       {activeTab === 'copywriter' && (
-        <div className="max-w-4xl mx-auto space-y-8 pb-32 animate-fade-in">
-          {/* Create New Prompt Area */}
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-8 backdrop-blur-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400">
-                <Sparkles size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-white">Daily Automation Queue</h3>
-            </div>
-            <div className="flex gap-4">
-              <input
-                type="text"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                placeholder="Topic for today's shorts (e.g. Daily Stoic Wisdom)..."
-                className="flex-1 bg-slate-900 border border-slate-700 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all shadow-inner placeholder:text-slate-600"
-                onKeyDown={(e) => e.key === 'Enter' && handleCreateScript()}
-              />
-              <button
-                onClick={handleCreateScript}
-                disabled={isGeneratingScript || !topic}
-                className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold transition-all hover:shadow-lg hover:shadow-indigo-600/20 flex items-center gap-2"
-              >
-                {isGeneratingScript ? <Loader2 className="animate-spin" /> : <span>Produce</span>}
-              </button>
-            </div>
-          </div>
-
-          {project && (
-            <div className="space-y-6">
-              <div className="flex justify-between items-center px-4">
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">{project.title} Segments</h4>
-                <div className="flex items-center gap-2">
-                  {isDriveConnected && <span className="text-[10px] text-green-400 bg-green-500/10 px-2 py-0.5 rounded font-mono">SYNCED</span>}
-                </div>
-              </div>
-              {project.segments.map(s => (
-                <SegmentCard
-                  key={s.id}
-                  segment={s}
-                  onUpdate={updateSegment}
-                  onOpenChat={(mode, seg) => setChatOverlay({ isOpen: true, mode, segment: seg })}
-                  onLike={handleLike}
-                  isProcessing={s.isGenerating || false}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+        <DirectorMode apiKey={(window as any).aistudio?.apiKey || userSettings.geminiKey || ''} />
       )}
       {activeTab === 'visuals' && (
         <div className="max-w-6xl mx-auto space-y-8 pb-32 animate-fade-in">

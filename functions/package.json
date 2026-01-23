@@ -1,0 +1,37 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "start": "npm run build && node lib/index.js",
+    "genkit:start": "npx genkit start -- npx tsx --watch src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@genkit-ai/ai": "^1.28.0",
+    "@genkit-ai/core": "^1.28.0",
+    "@genkit-ai/dotprompt": "^0.9.12",
+    "@genkit-ai/flow": "^0.5.17",
+    "@genkit-ai/googleai": "^1.28.0",
+    "@genkit-ai/vertexai": "^1.28.0",
+    "@google/genai": "^1.38.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "genkit": "^1.28.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "genkit-cli": "^1.28.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
